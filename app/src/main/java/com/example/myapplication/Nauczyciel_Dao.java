@@ -1,3 +1,4 @@
+
 package com.example.myapplication;
 
 import androidx.room.Dao;
@@ -10,11 +11,12 @@ import java.util.List;
 
 @Dao
 public interface Nauczyciel_Dao {
+
     @Insert
     void wstaw_Nauczyciela_Do_Bazy(Nauczyciel nauczyciel);
 
     @Insert
-    void wstaw_liste_nauczycieli(Nauczyciel ... nauczyciele);
+    void wstaw_liste_nauczycieli(Nauczyciel... nauczyciele);
 
     @Delete
     void ususn_Nauczyciela_z_Bazy(Nauczyciel nauczyciel);
@@ -22,10 +24,9 @@ public interface Nauczyciel_Dao {
     @Update
     void aktualizuj_tabele(Nauczyciel nauczyciel);
 
-    @Query("SELECT * from nauczyciele")
-    List<Nauczyciel> zwroc_wszytkich_nauczycieli_z_bazy(Nauczyciel nauczyciel);
+    @Query("SELECT * FROM nauczyciele")
+    List<Nauczyciel> zwroc_wszytkich_nauczycieli_z_bazy();
 
-    @Query("SELECT imie from nauczyciele WHERE przedmiot = :przedmiotArgument")
+    @Query("SELECT imie FROM nauczyciele WHERE przedmiot = :przedmiotArgument")
     List<String> zwroc_Imion_nauczycieli_ZPrzedmiotu(String przedmiotArgument);
-
 }
