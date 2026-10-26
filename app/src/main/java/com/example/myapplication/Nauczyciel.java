@@ -15,5 +15,5 @@ public class Nauczyciel{
         this.imie = imie;
         this.przedmiot = przedmiot;
     }
-
 }
+
