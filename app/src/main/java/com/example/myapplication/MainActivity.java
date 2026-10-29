@@ -99,16 +99,18 @@ public class MainActivity extends AppCompatActivity {
                 }
 
         );
-//        buttonAktualizacja.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        szkolaDatabase.get_NauczycielDAO().aktualizuj_tabele(
-//
-//                        );
-//                    }
-//                }
-//        );
+        buttonAktualizacja.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kliknietyNauczyciel.imie = editText.getText().toString();
+                        kliknietyNauczyciel.przedmiot = spinner.getSelectedItem().toString();
+                        buttonAktualizacja.setVisibility(view.INVISIBLE);
+                        szkolaDatabase.get_NauczycielDAO().aktualizuj_tabele(kliknietyNauczyciel);
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                }
+        );
 
     }
 
