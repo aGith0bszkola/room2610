@@ -2,8 +2,10 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -13,12 +15,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity {
     SzkolaDatabase szkolaDatabase;
     Button button;
     EditText editText;
     Spinner spinner;
+    ListView listViewNauczyciele;
+    List<Nauczyciel> nauczycielList;
+    ArrayAdapter<Nauczyciel>  arrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         editText = findViewById(R.id.editTextText);
         spinner = findViewById(R.id.spinner);
+        listViewNauczyciele = findViewById(R.id.ListWiev);
+        nauczycielList = szkolaDatabase.get_NauczycielDAO().zwroc_wszytkich_nauczycieli_z_bazy();
+        arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, nauczycielList);
+        listViewNauczyciele.setAdapter(arrayAdapter);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         spinner.getSelectedItem().toString()
                 );
                 szkolaDatabase.get_NauczycielDAO().wstaw_Nauczyciela_Do_Bazy(nauczyciel);
+
             }
         });
 
