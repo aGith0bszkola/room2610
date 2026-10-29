@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
                         spinner.getSelectedItem().toString()
                 );
                 szkolaDatabase.get_NauczycielDAO().wstaw_Nauczyciela_Do_Bazy(nauczyciel);
-
+//                nauczycielList = szkolaDatabase.get_NauczycielDAO().zwroc_wszytkich_nauczycieli_z_bazy();
+                nauczycielList.add(nauczyciel);
+                arrayAdapter.notifyDataSetChanged();
             }
         });
 
