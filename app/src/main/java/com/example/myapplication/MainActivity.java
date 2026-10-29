@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,16 +17,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     SzkolaDatabase szkolaDatabase;
-    Button button;
+    Button button, buttonAktualizacja;
     EditText editText;
     Spinner spinner;
     ListView listViewNauczyciele;
     List<Nauczyciel> nauczycielList;
     ArrayAdapter<Nauczyciel>  arrayAdapter;
+    Nauczyciel kliknietyNauczyciel;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         nauczycielList = szkolaDatabase.get_NauczycielDAO().zwroc_wszytkich_nauczycieli_z_bazy();
         arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, nauczycielList);
         listViewNauczyciele.setAdapter(arrayAdapter);
+        buttonAktualizacja = findViewById(R.id.buttonaktualizuj);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +75,41 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+        listViewNauczyciele.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        kliknietyNauczyciel = nauczycielList.get(i);
+                        //wypelniony formularz
+                        editText.setText(kliknietyNauczyciel.imie);
+                        ArrayList<String> przedmioty = new ArrayList<>(
+                                Arrays.asList(
+                                        "wf",
+                                        "informatyka",
+                                        "programowanie",
+                                        "fizyka",
+                                        "język angielski",
+                                        "język chiński"
+                                )
+                        );
+                        spinner.setSelection(przedmioty.indexOf(kliknietyNauczyciel.przedmiot));
+                        buttonAktualizacja.setVisibility(view.VISIBLE);
+                    }
+
+                }
+
+        );
+//        buttonAktualizacja.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        szkolaDatabase.get_NauczycielDAO().aktualizuj_tabele(
+//
+//                        );
+//                    }
+//                }
+//        );
+
     }
 
 }
