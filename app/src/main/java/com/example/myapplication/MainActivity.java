@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,9 +55,20 @@ public class MainActivity extends AppCompatActivity {
 //                nauczycielList = szkolaDatabase.get_NauczycielDAO().zwroc_wszytkich_nauczycieli_z_bazy();
                 nauczycielList.add(nauczyciel);
                 arrayAdapter.notifyDataSetChanged();
+
             }
         });
-
+        listViewNauczyciele.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        szkolaDatabase.get_NauczycielDAO().ususn_Nauczyciela_z_Bazy(nauczycielList.get(i));
+                        nauczycielList.remove(i);
+                        arrayAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+                }
+        );
     }
 
 }
